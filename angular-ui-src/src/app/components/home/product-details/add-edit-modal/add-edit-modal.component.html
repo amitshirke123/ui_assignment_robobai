@@ -1,0 +1,127 @@
+<div *ngIf="loader">
+    <div class="overlay">
+        <div class="spinner-wrapper">
+            <app-loader></app-loader>
+
+        </div>
+    </div>
+</div>
+<div class="dialog-div">
+    <div class="row">
+        <div class="container-fluid header-div">
+            <div>
+                <span class="title-css">{{data.action}} Product</span>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <form [formGroup]="prodDetailsForm" class="material-form" [class.blurred]="!loader">
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+
+                    <mat-form-field class="material-full-width">
+                        <mat-label>Product Name<span style="color: red;">*</span></mat-label>
+                        <input formControlName="product_name" pattern="^[a-zA-Z0-9 ]*$" matInput>
+                    </mat-form-field>
+                    <div *ngIf="prodDetailsForm.controls.product_name.errors && prodDetailsForm.controls.product_name.touched"
+                        class="text-danger">
+                        <div *ngIf="prodDetailsForm.controls.product_name.errors.required" class="errormsg">
+                            Required
+                        </div>
+                    </div>
+                    <div *ngIf="prodDetailsForm.controls.product_name.errors && prodDetailsForm.controls.product_name.touched"
+                        class="text-danger">
+                        <div *ngIf="prodDetailsForm.controls.product_name.errors.pattern" class="errormsg">
+                            Product Name should be Alphanumeric.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+
+                    <mat-form-field class="material-full-width">
+                        <mat-label>Cost Price<span style="color: red;">*</span></mat-label>
+                        <input formControlName="cost_price" pattern="^[0-9]\d*$" (input)="validateSellingPrice()" matInput>
+                    </mat-form-field>
+                    <div *ngIf="prodDetailsForm.controls.cost_price.errors && prodDetailsForm.controls.cost_price.touched"
+                        class="text-danger">
+                        <div *ngIf="prodDetailsForm.controls.cost_price.errors.required" class="errormsg">
+                            Required
+                        </div>
+                    </div>
+                    <div *ngIf="prodDetailsForm.controls.cost_price.errors && prodDetailsForm.controls.cost_price.touched"
+                        class="text-danger">
+                        <div *ngIf="prodDetailsForm.controls.cost_price.errors.pattern" class="errormsg">
+                            Cost Price should be Number.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <mat-form-field class="material-full-width">
+                        <mat-label>Selling Price</mat-label>
+                        <input formControlName="selling_price" pattern="^[0-9]\d*$" (input)="validateSellingPrice()"
+                            matInput>
+                    </mat-form-field>
+                    <div *ngIf="prodDetailsForm.controls.selling_price.errors && prodDetailsForm.controls.selling_price.touched"
+                        class="text-danger">
+                        <div *ngIf="prodDetailsForm.controls.selling_price.errors.required" class="errormsg">
+                            Required
+                        </div>
+                    </div>
+                    <div *ngIf="prodDetailsForm.controls.selling_price.errors && prodDetailsForm.controls.selling_price.touched"
+                        class="text-danger">
+                        <div *ngIf="prodDetailsForm.controls.selling_price.errors.pattern" class="errormsg">
+                            Selling Price should be Number.
+                        </div>
+                    </div>
+                    <div *ngIf="selling_price_error" class="text-danger">
+                        <div class="errormsg">
+                            Selling Price should be greater than Cost Price.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <mat-form-field class="material-full-width">
+                        <mat-label>Units Available</mat-label>
+                        <input formControlName="units_available" matInput>
+                    </mat-form-field>
+                    <div *ngIf="prodDetailsForm.controls.units_available.errors && prodDetailsForm.controls.units_available.touched"
+                        class="text-danger">
+                        <div *ngIf="prodDetailsForm.controls.units_available.errors.required" class="errormsg">
+                            Required
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <input type="hidden" autofocus="autofocus" />
+            <div class="err-msg" *ngIf="errorMsg">
+                {{errorMsg}}
+            </div>
+        </form>
+
+        <div class="btn-div">
+            <div class="col-md-2 offset-md-8 form-group">
+                <button *ngIf="data.action == 'Add'"
+                    [attr.disabled]="prodDetailsForm.invalid || selling_price_error? true: null"
+                    class="btn btn-primary action-btn" (click)="saveProduct();">Save
+                </button>
+                <button *ngIf="data.action == 'View/Edit'"
+                    [attr.disabled]="prodDetailsForm.invalid || selling_price_error? true: null"
+                    class="btn btn-primary action-btn" (click)="updateProduct();">Update
+                </button>
+            </div>
+            <div class="col-md-2 form-group"><button (click)="close()"
+                    class="btn btn-primary action-btn cls-css">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>

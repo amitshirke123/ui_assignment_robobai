@@ -1,0 +1,68 @@
+<div *ngIf="loader">
+    <div class="overlay">
+      <div class="spinner-wrapper">
+        <app-loader></app-loader>
+  
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 form-group">
+    <ng-select [items]="products" bindLabel="name" [clearable]="true" (clear)="onClear()" [(ngModel)]="product_name" [searchable]="true" (change)="getValue()">
+    </ng-select> 
+  </div>
+
+  <div class="col-md-2 offset-md-10 form-group">    
+    <button (click)="openAddEditModal('Add', '')" class="btn btn-primary action-btn">Add
+      Product</button>
+  </div>
+
+<div class="col-xs-12 col-md-12" [class.blured]="loader" style="padding-bottom: 2.5rem">
+
+    <div class="table-responsive">
+    <table [dataSource]="dataSource"  mat-table matSort style="border: 1px solid lightgray">
+        <ng-container matColumnDef="id">
+          <th *matHeaderCellDef mat-header-cell>ID</th>
+          <td *matCellDef="let element" mat-cell> {{element?.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="product_name">
+          <th *matHeaderCellDef mat-header-cell> Product Name</th>
+          <td *matCellDef="let element" mat-cell>{{element?.product_name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cost_price">
+          <th *matHeaderCellDef mat-header-cell>Cost Price</th>
+          <td *matCellDef="let element" mat-cell> {{element?.cost_price}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="selling_price">
+          <th *matHeaderCellDef mat-header-cell>Selling Price</th>
+          <td *matCellDef="let element" mat-cell> {{element?.selling_price}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="units_available">
+          <th *matHeaderCellDef mat-header-cell> No. of Units available</th>
+          <td *matCellDef="let element" mat-cell>{{element?.units_available}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th *matHeaderCellDef mat-header-cell>Action</th>
+          <td *matCellDef="let element" mat-cell>
+            <span class="material-icons" (click)="openAddEditModal('View/Edit', element)" title="Edit" style="color:blue;cursor: pointer;">
+                edit
+                </span>&nbsp;
+                <span class="material-icons" (click)="deleteProduct(element)" title="Delete" style="color: #DC143C;cursor: pointer;">
+                    delete
+                    </span>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+      </table>
+      <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5"></mat-paginator>
+      <p *ngIf="noUserData" style="color: red; text-align:center">No Records Found.</p>
+    </div>
+
+  </div>
