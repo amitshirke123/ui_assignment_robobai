@@ -21,7 +21,7 @@ import {
               errorMessage = `Error: ${error.error.message}`;
             } else {
               // server-side error
-              errorMessage = 'Something went wrong or backend server is not up.';
+              errorMessage = 'Something went wrong or server is down.';
             }
             window.alert(errorMessage);
             return throwError(errorMessage);

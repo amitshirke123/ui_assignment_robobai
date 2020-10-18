@@ -44,7 +44,7 @@
                 <div class="col-md-6 form-group">
 
                     <mat-form-field class="material-full-width">
-                        <mat-label>Cost Price<span style="color: red;">*</span></mat-label>
+                        <mat-label>Cost Price<span style="color: red;" *ngIf="data.action =='Add'">*</span></mat-label>
                         <input formControlName="cost_price" pattern="^[0-9]\d*$" (input)="validateSellingPrice()" matInput>
                     </mat-form-field>
                     <div *ngIf="prodDetailsForm.controls.cost_price.errors && prodDetailsForm.controls.cost_price.touched"
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-md-6 form-group">
                     <mat-form-field class="material-full-width">
-                        <mat-label>Selling Price</mat-label>
+                        <mat-label>Selling Price<span style="color: red;">*</span></mat-label>
                         <input formControlName="selling_price" pattern="^[0-9]\d*$" (input)="validateSellingPrice()"
                             matInput>
                     </mat-form-field>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="col-md-6 form-group">
                     <mat-form-field class="material-full-width">
-                        <mat-label>Units Available</mat-label>
+                        <mat-label>Units Available<span style="color: red;" *ngIf="data.action =='Add'">*</span></mat-label>
                         <input formControlName="units_available" matInput>
                     </mat-form-field>
                     <div *ngIf="prodDetailsForm.controls.units_available.errors && prodDetailsForm.controls.units_available.touched"
